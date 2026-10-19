@@ -11,7 +11,12 @@ const Contact = () => {
           <div className="contact-box">
             <h4>Email</h4>
             <p>
-              <a href={`mailto:${email}`} data-cursor="disable">
+              <a
+                href={`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-cursor="disable"
+              >
                 {email}
               </a>
             </p>
@@ -53,9 +58,7 @@ const Contact = () => {
             </a>
           </div>
           <div className="contact-box">
-            <h2>
-              Designed and Developed <br /> by <span>{name}</span>
-            </h2>
+            <h2>Developed by <span>{name}</span> · Based on a template by Moncy Yohannan</h2>
             <h5>
               <MdCopyright /> {new Date().getFullYear()}
             </h5>

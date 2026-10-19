@@ -57,7 +57,9 @@ const Navbar = () => {
           {name}
         </a>
         <a
-          href={`mailto:${email}`}
+          href={`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email)}`}
+          target="_blank"
+          rel="noopener noreferrer"
           className="navbar-connect"
           data-cursor="disable"
         >
