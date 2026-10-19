@@ -13,20 +13,28 @@ import {
 
 const textureLoader = new THREE.TextureLoader();
 const imageUrls = [
+  "/images/javascript.webp",
   "/images/react2.webp",
-  "/images/next2.webp",
+  "/images/html5.svg",
+  "/images/css3.svg",
   "/images/node2.webp",
   "/images/express.webp",
   "/images/mongo.webp",
-  "/images/mysql.webp",
+  "/images/tailwindcss.svg",
+  "/images/mui.svg",
+  "/images/socketio.svg",
+  "/images/git.svg",
   "/images/typescript.webp",
-  "/images/javascript.webp",
 ];
-const textures = imageUrls.map((url) => textureLoader.load(url));
+const textures = imageUrls.map((url) => {
+  const texture = textureLoader.load(url);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  return texture;
+});
 
 const sphereGeometry = new THREE.SphereGeometry(1, 28, 28);
 
-const spheres = [...Array(30)].map(() => ({
+const spheres = [...Array(imageUrls.length * 2)].map(() => ({
   scale: [0.7, 1, 0.8, 1, 1][Math.floor(Math.random() * 5)],
 }));
 
@@ -130,25 +138,35 @@ const TechStack = () => {
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY || document.documentElement.scrollTop;
-      const threshold = document
-        .getElementById("work")!
-        .getBoundingClientRect().top;
+      const work = document.getElementById("work");
+      if (!work) return;
+      const threshold = work.getBoundingClientRect().top;
       setIsActive(scrollY > threshold);
     };
-    document.querySelectorAll(".header a").forEach((elem) => {
+    const intervals: number[] = [];
+    const clickHandlers = Array.from(
+      document.querySelectorAll(".header a")
+    ).map((elem) => {
       const element = elem as HTMLAnchorElement;
-      element.addEventListener("click", () => {
+      const onClick = () => {
         const interval = setInterval(() => {
           handleScroll();
         }, 10);
-        setTimeout(() => {
+        intervals.push(interval);
+        window.setTimeout(() => {
           clearInterval(interval);
         }, 1000);
-      });
+      };
+      element.addEventListener("click", onClick);
+      return { element, onClick };
     });
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      clickHandlers.forEach(({ element, onClick }) => {
+        element.removeEventListener("click", onClick);
+      });
+      intervals.forEach(clearInterval);
     };
   }, []);
   const materials = useMemo(() => {
@@ -166,12 +184,21 @@ const TechStack = () => {
     );
   }, []);
 
+  useEffect(
+    () => () => {
+      materials.forEach((material) => material.dispose());
+    },
+    [materials]
+  );
+
   return (
     <div className="techstack">
       <h2> My Techstack</h2>
 
       <Canvas
         shadows
+        dpr={[1, 1.5]}
+        frameloop={isActive ? "always" : "demand"}
         gl={{ alpha: true, stencil: false, depth: false, antialias: false }}
         camera={{ position: [0, 0, 20], fov: 32.5, near: 1, far: 100 }}
         onCreated={(state) => (state.gl.toneMappingExposure = 1.5)}
@@ -193,7 +220,7 @@ const TechStack = () => {
             <SphereGeo
               key={i}
               {...props}
-              material={materials[Math.floor(Math.random() * materials.length)]}
+              material={materials[i % materials.length]}
               isActive={isActive}
             />
           ))}

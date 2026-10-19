@@ -1,4 +1,5 @@
 import "./styles/Career.css";
+import { careerEntries } from "../data/career";
 
 const Career = () => {
   return (
@@ -12,48 +13,20 @@ const Career = () => {
           <div className="career-timeline">
             <div className="career-dot"></div>
           </div>
-          <div className="career-info-box">
-            <div className="career-info-in">
-              <div className="career-role">
-                <h4>Position In Company</h4>
-                <h5>Company Name</h5>
+          {careerEntries.map(({ title, subtitle, year, description }) => (
+            <div className="career-info-box" key={`${title}-${year}`}>
+              <div className="career-info-in">
+                <div className="career-role">
+                  <h4>{title}</h4>
+                  <h5>{subtitle}</h5>
+                </div>
+                <h3 className={year.includes("-") ? "career-year-range" : ""}>
+                  {year}
+                </h3>
               </div>
-              <h3>20XX</h3>
+              <p>{description}</p>
             </div>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim
-              labore sit non ipsum temporibus quidem, deserunt eaque officiis
-              mollitia ratione suscipit repellat.
-            </p>
-          </div>
-          <div className="career-info-box">
-            <div className="career-info-in">
-              <div className="career-role">
-                <h4>Position In Company</h4>
-                <h5>Company Name</h5>
-              </div>
-              <h3>20XX</h3>
-            </div>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim
-              labore sit non ipsum temporibus quidem, deserunt eaque officiis
-              mollitia ratione suscipit repellat.
-            </p>
-          </div>
-          <div className="career-info-box">
-            <div className="career-info-in">
-              <div className="career-role">
-                <h4>Position In Company</h4>
-                <h5>Company Name</h5>
-              </div>
-              <h3>NOW</h3>
-            </div>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim
-              labore sit non ipsum temporibus quidem, deserunt eaque officiis
-              mollitia ratione suscipit repellat.
-            </p>
-          </div>
+          ))}
         </div>
       </div>
     </div>

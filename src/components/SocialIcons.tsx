@@ -1,17 +1,14 @@
-import {
-  FaGithub,
-  FaInstagram,
-  FaLinkedinIn,
-  FaXTwitter,
-} from "react-icons/fa6";
+import { FaGithub, FaInstagram, FaLinkedinIn } from "react-icons/fa6";
 import "./styles/SocialIcons.css";
 import { TbNotes } from "react-icons/tb";
 import { useEffect } from "react";
 import HoverLinks from "./HoverLinks";
+import { github, instagram, linkedin, resume } from "../data/links.js";
 
 const SocialIcons = () => {
   useEffect(() => {
     const social = document.getElementById("social") as HTMLElement;
+    const cleanups: Array<() => void> = [];
 
     social.querySelectorAll("span").forEach((item) => {
       const elem = item as HTMLElement;
@@ -23,6 +20,7 @@ const SocialIcons = () => {
       let currentX = 0;
       let currentY = 0;
 
+      let frameId = 0;
       const updatePosition = () => {
         currentX += (mouseX - currentX) * 0.1;
         currentY += (mouseY - currentY) * 0.1;
@@ -30,7 +28,7 @@ const SocialIcons = () => {
         link.style.setProperty("--siLeft", `${currentX}px`);
         link.style.setProperty("--siTop", `${currentY}px`);
 
-        requestAnimationFrame(updatePosition);
+        frameId = requestAnimationFrame(updatePosition);
       };
 
       const onMouseMove = (e: MouseEvent) => {
@@ -48,39 +46,42 @@ const SocialIcons = () => {
 
       document.addEventListener("mousemove", onMouseMove);
 
-      updatePosition();
-
-      return () => {
-        elem.removeEventListener("mousemove", onMouseMove);
-      };
+      frameId = requestAnimationFrame(updatePosition);
+      cleanups.push(() => {
+        cancelAnimationFrame(frameId);
+        document.removeEventListener("mousemove", onMouseMove);
+      });
     });
+    return () => {
+      cleanups.forEach((cleanup) => cleanup());
+    };
   }, []);
 
   return (
     <div className="icons-section">
       <div className="social-icons" data-cursor="icons" id="social">
         <span>
-          <a href="https://github.com" target="_blank">
+          <a href={github} target="_blank" rel="noopener noreferrer">
             <FaGithub />
           </a>
         </span>
         <span>
-          <a href="https://www.linkedin.com" target="_blank">
+          <a href={linkedin} target="_blank" rel="noopener noreferrer">
             <FaLinkedinIn />
           </a>
         </span>
         <span>
-          <a href="https://x.com" target="_blank">
-            <FaXTwitter />
-          </a>
-        </span>
-        <span>
-          <a href="https://www.instagram.com" target="_blank">
+          <a href={instagram} target="_blank" rel="noopener noreferrer">
             <FaInstagram />
           </a>
         </span>
       </div>
-      <a className="resume-button" href="#">
+      <a
+        className="resume-button"
+        href={resume}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         <HoverLinks text="RESUME" />
         <span>
           <TbNotes />

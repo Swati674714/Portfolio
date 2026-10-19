@@ -1,4 +1,5 @@
 import { MdArrowOutward, MdCopyright } from "react-icons/md";
+import { email, github, instagram, linkedin, name, phone } from "../data/links.js";
 import "./styles/Contact.css";
 
 const Contact = () => {
@@ -10,46 +11,41 @@ const Contact = () => {
           <div className="contact-box">
             <h4>Email</h4>
             <p>
-              <a href="mailto:example@mail.com" data-cursor="disable">
-                example@mail.com
+              <a href={`mailto:${email}`} data-cursor="disable">
+                {email}
               </a>
             </p>
             <h4>Phone</h4>
             <p>
-              <a href="tel:+9199999999" data-cursor="disable">
-                +91 99999 99999
+              <a href={`tel:${phone.replace(/\s/g, "")}`} data-cursor="disable">
+                {phone}
               </a>
             </p>
           </div>
           <div className="contact-box">
             <h4>Social</h4>
             <a
-              href="https://github.com"
+              href={github}
               target="_blank"
+              rel="noopener noreferrer"
               data-cursor="disable"
               className="contact-social"
             >
               Github <MdArrowOutward />
             </a>
             <a
-              href="https://www.linkedin.com"
+              href={linkedin}
               target="_blank"
+              rel="noopener noreferrer"
               data-cursor="disable"
               className="contact-social"
             >
               Linkedin <MdArrowOutward />
             </a>
             <a
-              href="https://x.com"
+              href={instagram}
               target="_blank"
-              data-cursor="disable"
-              className="contact-social"
-            >
-              Twitter <MdArrowOutward />
-            </a>
-            <a
-              href="https://www.instagram.com"
-              target="_blank"
+              rel="noopener noreferrer"
               data-cursor="disable"
               className="contact-social"
             >
@@ -58,10 +54,10 @@ const Contact = () => {
           </div>
           <div className="contact-box">
             <h2>
-              Designed and Developed <br /> by <span>Moncy Yohannan</span>
+              Designed and Developed <br /> by <span>{name}</span>
             </h2>
             <h5>
-              <MdCopyright /> 2024
+              <MdCopyright /> {new Date().getFullYear()}
             </h5>
           </div>
         </div>

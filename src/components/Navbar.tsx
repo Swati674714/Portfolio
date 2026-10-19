@@ -3,6 +3,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import HoverLinks from "./HoverLinks";
 import { gsap } from "gsap";
 import { ScrollSmoother } from "gsap-trial/ScrollSmoother";
+import { email, name } from "../data/links.js";
 import "./styles/Navbar.css";
 
 gsap.registerPlugin(ScrollSmoother, ScrollTrigger);
@@ -23,34 +24,44 @@ const Navbar = () => {
     smoother.scrollTop(0);
     smoother.paused(true);
 
-    let links = document.querySelectorAll(".header ul a");
-    links.forEach((elem) => {
-      let element = elem as HTMLAnchorElement;
-      element.addEventListener("click", (e) => {
+    const links = Array.from(document.querySelectorAll(".header ul a"));
+    const clickHandlers = links.map((elem) => {
+      const element = elem as HTMLAnchorElement;
+      const onClick = (e: Event) => {
         if (window.innerWidth > 1024) {
           e.preventDefault();
-          let elem = e.currentTarget as HTMLAnchorElement;
-          let section = elem.getAttribute("data-href");
+          const section = element.getAttribute("data-href");
           smoother.scrollTo(section, true, "top top");
         }
-      });
+      };
+      element.addEventListener("click", onClick);
+      return { element, onClick };
     });
-    window.addEventListener("resize", () => {
+    const onResize = () => {
       ScrollSmoother.refresh(true);
-    });
+    };
+    window.addEventListener("resize", onResize);
+
+    return () => {
+      clickHandlers.forEach(({ element, onClick }) => {
+        element.removeEventListener("click", onClick);
+      });
+      window.removeEventListener("resize", onResize);
+      smoother.kill();
+    };
   }, []);
   return (
     <>
       <div className="header">
         <a href="/#" className="navbar-title" data-cursor="disable">
-          Logo
+          {name}
         </a>
         <a
-          href="mailto:example@mail.com"
+          href={`mailto:${email}`}
           className="navbar-connect"
           data-cursor="disable"
         >
-          example@mail.com
+          {email}
         </a>
         <ul>
           <li>

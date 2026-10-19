@@ -1,4 +1,5 @@
 import { PropsWithChildren } from "react";
+import { name } from "../data/links.js";
 import "./styles/Landing.css";
 
 const Landing = ({ children }: PropsWithChildren) => {
@@ -9,21 +10,21 @@ const Landing = ({ children }: PropsWithChildren) => {
           <div className="landing-intro">
             <h2>Hello! I'm</h2>
             <h1>
-              MONCY
+              {name.split(" ")[0].toUpperCase()}
               <br />
-              <span>YOHANNAN</span>
+              <span>{name.split(" ").slice(1).join(" ").toUpperCase()}</span>
             </h1>
           </div>
           <div className="landing-info">
-            <h3>A Creative</h3>
-            <h2 className="landing-info-h2">
-              <div className="landing-h2-1">Designer</div>
-              <div className="landing-h2-2">Developer</div>
-            </h2>
-            <h2>
-              <div className="landing-h2-info">Developer</div>
-              <div className="landing-h2-info-1">Designer</div>
-            </h2>
+            <div className="landing-role">Software</div>
+            <div className="landing-role-stack">
+              <span>Developer</span>
+              <span>Engineer</span>
+            </div>
+            <div className="landing-role-extra">
+              <span>MERN Stack</span>
+              <span>Developer</span>
+            </div>
           </div>
         </div>
         {children}

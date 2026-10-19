@@ -1,0 +1,40 @@
+export const projects = [
+  {
+    number: "01",
+    title: "EquiTrade",
+    category: "Stock Trading Platform",
+    tools: "React, Node.js, Express.js, MongoDB",
+    image: "/images/equitrade.png",
+    link: "https://equi-trade-phi.vercel.app",
+  },
+  {
+    number: "02",
+    title: "OrbitConnect",
+    category: "Video Conferencing Platform",
+    tools: "Video conferencing features",
+    image: "/images/orbitconnect.png",
+  },
+  {
+    number: "03",
+    title: "Learnwave",
+    category: "Video Learning Platform",
+    tools: "React, Node.js, Express.js, MongoDB",
+    image: "/images/learn.png",
+    link: "https://learnwave-kappa.vercel.app",
+  },
+  {
+    number: "04",
+    title: "Restaurant",
+    category: "Restaurant Website",
+    tools: "Restaurant features",
+    image: "/images/restaurant.png",
+  },
+  {
+    number: "05",
+    title: "Gym",
+    category: "Fitness Website",
+    tools: "Gym and fitness features",
+    image: "/gym.png",
+    link: "https://gym-repo667.vercel.app",
+  },
+];

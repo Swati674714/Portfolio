@@ -3,8 +3,8 @@
   max-width: var(--cMaxWidth);
   width: var(--cWidth);
   justify-content: space-between;
-  padding: 20px 0px;
-  margin-bottom: -100px;
+  padding: 16px 0;
+  margin-bottom: 0;
   box-sizing: border-box;
   position: fixed;
   left: 50%;
@@ -15,13 +15,13 @@
 .header ul {
   font-size: 12px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   margin: 0;
   padding: 0;
   list-style: none;
-  column-gap: 40px;
+  column-gap: 12px;
   row-gap: 8px;
-  align-items: end;
+  align-items: center;
 }
 .header ul li {
   margin-left: 0px;
@@ -29,6 +29,11 @@
   color: #ccc;
   font-weight: 600;
   cursor: pointer;
+}
+.header ul li a {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
 }
 .navbar-connect {
   position: absolute;
@@ -42,23 +47,41 @@
 }
 .navbar-title {
   font-weight: 700;
-  font-size: 14px;
+  font-size: 12px;
   letter-spacing: 0.2px;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 @media only screen and (min-width: 500px) {
   .header {
     padding: 20px 0px;
   }
   .header ul {
-    flex-direction: row;
     align-items: center;
     font-size: 14px;
+    column-gap: 22px;
   }
   .header ul li {
     color: #eae5ec;
   }
   .navbar-title {
     font-size: 16px;
+  }
+}
+@media only screen and (max-width: 380px) {
+  .header {
+    width: calc(100% - 24px);
+    padding-top: 13px;
+  }
+  .header ul {
+    column-gap: 8px;
+    font-size: 10px;
+  }
+  .header ul li {
+    letter-spacing: 0;
+  }
+  .navbar-title {
+    font-size: 11px;
   }
 }
 @media only screen and (min-width: 900px) {

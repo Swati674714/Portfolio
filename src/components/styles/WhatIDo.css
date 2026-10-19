@@ -207,6 +207,8 @@
 .what-content-in {
   height: 100%;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 .what-content-in h5 {
   font-weight: 300;
@@ -230,8 +232,14 @@
   display: flex;
   gap: 5px;
   flex-wrap: wrap;
+  min-width: 0;
+  max-width: 100%;
+  min-height: 0;
+  overflow-y: auto;
+  align-content: flex-start;
 }
 .what-tags {
+  max-width: 100%;
   font-size: 13px;
   font-weight: 400;
   padding: 2px 7px;

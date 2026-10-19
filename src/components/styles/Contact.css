@@ -90,3 +90,44 @@ a.contact-social {
     width: calc(100% - 25px);
   }
 }
+@media only screen and (max-width: 600px) {
+  .contact-section {
+    width: calc(100% - 36px);
+    padding-bottom: 110px;
+    margin-top: 35px;
+  }
+
+  .contact-container {
+    width: 100%;
+  }
+
+  .contact-section h3 {
+    font-size: clamp(38px, 10vw, 50px);
+  }
+
+  .contact-flex {
+    gap: 25px;
+  }
+
+  .contact-flex h4 {
+    margin-top: 14px;
+  }
+
+  .contact-flex p,
+  .contact-social {
+    overflow-wrap: anywhere;
+  }
+
+  .contact-box h2 {
+    font-size: 17px;
+    line-height: 1.5;
+  }
+
+  a.contact-social {
+    width: fit-content;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    font-size: 19px;
+  }
+}

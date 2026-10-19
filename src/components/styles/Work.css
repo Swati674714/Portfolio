@@ -1,3 +1,8 @@
+.work-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
 .work-section h2 {
   margin-top: 100px;
   font-size: 70px;
@@ -20,12 +25,22 @@
   align-content: stretch;
 }
 .work-flex {
-  width: 100%;
+  box-sizing: border-box;
+  width: calc(100% + 80px);
   display: flex;
   height: 100%;
   margin-left: -80px;
-  padding-right: 120px;
+  padding-right: 80px;
   position: relative;
+  align-items: stretch;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-color: #777 transparent;
+  scrollbar-width: thin;
+  border-top: 1px solid #363636;
+  border-bottom: 1px solid #363636;
 }
 .work-box {
   padding: 80px;
@@ -37,23 +52,39 @@
   flex-shrink: 0;
   gap: 50px;
   justify-content: start;
+  background: rgba(255, 255, 255, 0.01);
+  scroll-snap-align: start;
 }
-.work-flex .work-box:nth-child(even) {
+.work-flex::-webkit-scrollbar {
+  height: 8px;
+}
+.work-flex::-webkit-scrollbar-thumb {
+  background: #777;
+  border-radius: 8px;
+}
+.work-controls {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+.work-controls button {
+  width: 44px;
+  height: 44px;
+  border: 1px solid #363636;
+  border-radius: 50%;
+  background: transparent;
+  color: inherit;
+  display: grid;
+  place-items: center;
+  font-size: 30px;
+  cursor: pointer;
+}
+.work-controls button:hover {
+  color: var(--accentColor);
+  border-color: var(--accentColor);
+}
+.work-flex .work-box:nth-child(odd) {
   flex-direction: column-reverse;
-}
-.work-flex::before,
-.work-flex::after {
-  content: "";
-  width: calc(50000vw);
-  height: 1px;
-  background-color: #363636;
-  position: absolute;
-  left: 50%;
-  top: 0;
-  transform: translateX(-50%);
-}
-.work-flex::after {
-  top: 100%;
 }
 .work-title {
   justify-content: space-between;
@@ -142,6 +173,9 @@
     margin-bottom: 30px;
     margin-top: 70px;
   }
+  .work-controls {
+    margin-bottom: 30px;
+  }
 }
 @media only screen and (max-width: 1400px) {
   .work-title h3 {
@@ -158,11 +192,16 @@
     padding: 50px;
   }
   .work-flex {
+    box-sizing: border-box;
     margin-left: -50px;
-    padding-right: 75px;
+    width: calc(100% + 50px);
+    padding-right: 50px;
   }
   .work-section h2 {
     font-size: 50px;
+  }
+  .work-controls {
+    margin-bottom: 30px;
   }
 }
 @media only screen and (max-width: 1400px) {
@@ -172,7 +211,8 @@
   }
   .work-flex {
     margin-left: -30px;
-    padding-right: 45px;
+    width: calc(100% + 30px);
+    padding-right: 30px;
   }
 }
 
@@ -201,10 +241,130 @@
   }
 } */
 @media only screen and (max-width: 1025px) {
+  .work-section {
+    height: auto;
+    padding: 45px 0 20px;
+  }
+
+  .work-heading {
+    align-items: center;
+  }
+
   .work-container {
     align-content: normal;
-  }
-  .work-flex {
     height: auto;
+  }
+
+  .work-section h2 {
+    margin: 0 0 28px;
+    font-size: clamp(40px, 8vw, 56px);
+  }
+
+  .work-controls {
+    display: none;
+  }
+
+  .work-flex {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+    height: auto;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+    scroll-snap-type: none;
+    border: 0;
+  }
+
+  .work-box {
+    width: 100%;
+    min-width: 0;
+    padding: 24px 0;
+    border-right: 0;
+    border-bottom: 1px solid #363636;
+    gap: 18px;
+    background: transparent;
+  }
+
+  .work-flex .work-box:nth-child(even) {
+    flex-direction: column;
+  }
+
+  .work-title {
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  .work-title > div {
+    min-width: 0;
+    text-align: right;
+  }
+
+  .work-title h3 {
+    flex: 0 0 auto;
+    font-size: 34px;
+    line-height: 1;
+  }
+
+  .work-title h4 {
+    overflow-wrap: anywhere;
+  }
+
+  .work-info > p {
+    width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  .work-image {
+    justify-content: flex-start;
+  }
+
+  .work-image-in {
+    display: block;
+    width: 100%;
+  }
+
+  .work-image img {
+    display: block;
+    width: 100%;
+    max-height: none;
+    height: auto;
+    object-fit: cover;
+  }
+
+  .work-link {
+    width: 44px;
+    height: 44px;
+    opacity: 1;
+  }
+
+}
+
+@media only screen and (max-width: 600px) {
+  .work-container {
+    width: calc(100% - 36px);
+  }
+
+  .work-section {
+    padding-top: 28px;
+  }
+
+  .work-box {
+    padding-block: 20px;
+  }
+
+  .work-title h3 {
+    font-size: 30px;
+  }
+
+  .work-info h4 {
+    font-size: 16px;
+  }
+
+  .work-info p {
+    font-size: 13px;
+    line-height: 1.5;
   }
 }

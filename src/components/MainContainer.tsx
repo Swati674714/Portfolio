@@ -1,4 +1,11 @@
-import { lazy, PropsWithChildren, Suspense, useEffect, useState } from "react";
+import {
+  lazy,
+  PropsWithChildren,
+  Suspense,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import About from "./About";
 import Career from "./Career";
 import Contact from "./Contact";
@@ -16,6 +23,8 @@ const MainContainer = ({ children }: PropsWithChildren) => {
   const [isDesktopView, setIsDesktopView] = useState<boolean>(
     window.innerWidth > 1024
   );
+  const [shouldLoadTechStack, setShouldLoadTechStack] = useState(false);
+  const techStackRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const resizeHandler = () => {
@@ -28,6 +37,33 @@ const MainContainer = ({ children }: PropsWithChildren) => {
       window.removeEventListener("resize", resizeHandler);
     };
   }, [isDesktopView]);
+
+  useEffect(() => {
+    const section = techStackRef.current;
+    if (!section) return;
+    if (!("IntersectionObserver" in window)) {
+      setShouldLoadTechStack(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShouldLoadTechStack(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "300px 0px" }
+    );
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
+
+  const techStackPlaceholder = (
+    <div className="techstack" ref={techStackRef}>
+      <h2>My Techstack</h2>
+    </div>
+  );
 
   return (
     <div className="container-main">
@@ -43,11 +79,9 @@ const MainContainer = ({ children }: PropsWithChildren) => {
             <WhatIDo />
             <Career />
             <Work />
-            {isDesktopView && (
-              <Suspense fallback={<div>Loading....</div>}>
-                <TechStack />
-              </Suspense>
-            )}
+            <Suspense fallback={techStackPlaceholder}>
+              {shouldLoadTechStack ? <TechStack /> : techStackPlaceholder}
+            </Suspense>
             <Contact />
           </div>
         </div>
